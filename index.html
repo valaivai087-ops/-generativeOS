@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>生成人生 OS · Generative Life OS</title>
+<style>
+:root{
+  --w:#ffffff;
+  --bg:#f6f8fc;
+  --bg2:#edf1f8;
+  --ink:#0c1a2e;
+  --ink2:#2d4060;
+  --ink3:#647490;
+  --teal:#0d9488;
+  --teal-l:#ccfbf1;
+  --teal-m:#5eead4;
+  --blue:#1e40af;
+  --blue-l:#dbeafe;
+  --emerald:#059669;
+  --emerald-l:#d1fae5;
+  --violet:#6d28d9;
+  --violet-l:#ede9fe;
+  --indigo:#3730a3;
+  --indigo-l:#e0e7ff;
+  --amber:#b45309;
+  --amber-l:#fef3c7;
+  --rose:#be123c;
+  --rose-l:#ffe4e6;
+  --slate:#475569;
+  --slate-l:#f1f5f9;
+  --border:#dde4f0;
+  --sh:0 2px 12px rgba(12,26,46,.07);
+  --sh2:0 8px 32px rgba(12,26,46,.12);
+  --r:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Noto Sans TC","Microsoft JhengHei",Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.65}
+button{cursor:pointer;font:inherit}
+
+/* ── NAV ── */
+.nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav-i{max-width:1320px;margin:auto;padding:0 22px;display:flex;align-items:center;justify-content:space-between;height:60px;gap:14px}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,#0d9488,#1e40af);display:grid;place-items:center;color:#fff;font-size:17px;font-weight:900}
+.logo-txt{font-weight:900;font-size:16px;color:var(--teal);line-height:1.15}
+.logo-sub{font-size:10px;color:var(--ink3);font-weight:600;letter-spacing:.03em}
+.nav-links{display:flex;gap:2px;flex-wrap:wrap}
+.nl{padding:5px 9px;border-radius:6px;font-size:11px;font-weight:700;color:var(--ink2);border:none;background:none;transition:.15s}
+.nl:hover,.nl.on{background:var(--teal-l);color:var(--teal)}
+
+/* ── HERO ── */
+.hero{background:linear-gradient(140deg,#071528 0%,#0c2a44 35%,#0d4a6e 65%,#0d9488 100%);color:#fff;padding:80px 24px 70px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(13,148,136,.18) 0%,transparent 55%),radial-gradient(ellipse at 80% 30%,rgba(30,64,175,.22) 0%,transparent 50%);pointer-events:none}
+.h-eye{display:inline-block;padding:6px 16px;border:1px solid rgba(255,255,255,.22);border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.09em;color:#99f6e4;margin-bottom:22px}
+.hero h1{font-size:clamp(32px,6vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.02em;margin-bottom:8px}
+.hero h1 .teal{color:#5eead4}
+.hero-en{font-size:clamp(14px,2vw,22px);font-weight:300;letter-spacing:.14em;color:#7dd3fc;margin-bottom:24px}
+.hero-sub{max-width:660px;margin:0 auto 10px;font-size:17px;color:#bfdbfe;line-height:1.85}
+.hero-sub-en{max-width:660px;margin:0 auto 36px;font-size:14px;color:#93c5fd;line-height:1.75;font-style:italic}
+.h-flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:6px;margin-bottom:36px}
+.hfs{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.14);font-size:12px;font-weight:700;color:#e0f2fe;line-height:1.4;text-align:center}
+.hfa{color:#5eead4;font-size:20px;font-weight:900}
+.h-problems{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:36px}
+.hp{padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:12px;font-weight:700;color:#bfdbfe}
+.h-quote{max-width:560px;margin:0 auto;padding:18px 22px;border-left:3px solid #5eead4;background:rgba(255,255,255,.05);border-radius:0 10px 10px 0;text-align:left}
+.h-quote p{color:#a5f3fc;font-size:14px;line-height:1.85;font-style:italic}
+.h-quote .en{color:#7dd3fc;font-size:12px;margin-top:7px}
+
+/* ── WRAP ── */
+.wrap{max-width:1320px;margin:0 auto;padding:0 22px}
+.sec{padding:58px 0 42px}
+.sh{margin-bottom:36px}
+.sh .etag{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--teal);text-transform:uppercase;margin-bottom:8px}
+.sh h2{font-size:clamp(20px,3vw,36px);font-weight:900;color:var(--ink);line-height:1.1;margin-bottom:6px}
+.sh p{color:var(--ink2);font-size:14px;line-height:1.75;max-width:700px}
+.sh .pe{color:var(--ink3);font-size:12px;line-height:1.7;max-width:700px;font-style:italic;margin-top:4px}
+.div{height:1px;background:var(--border)}
+
+/* ── CARDS BASE ── */
+.card{padding:20px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh)}
+.card:hover{box-shadow:var(--sh2);transform:translateY(-1px)}
+
+/* ── ENTROPY COMPARE ── */
+.ec-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.ec{padding:24px;border-radius:var(--r);border:2px solid var(--border);background:var(--w);box-shadow:var(--sh)}
+.ec.high{border-color:#fca5a5;background:linear-gradient(135deg,#fff5f5,#fff)}
+.ec.low{border-color:#6ee7b7;background:linear-gradient(135deg,#f0fdf9,#fff)}
+.ec-badge{display:inline-block;padding:4px 12px;border-radius:999px;font-size:11px;font-weight:900;margin-bottom:14px}
+.ec.high .ec-badge{background:var(--rose-l);color:var(--rose)}
+.ec.low .ec-badge{background:var(--emerald-l);color:var(--emerald)}
+.ec-title{font-size:20px;font-weight:900;color:var(--ink);margin-bottom:3px}
+.ec-title-en{font-size:12px;color:var(--ink3);font-style:italic;margin-bottom:16px}
+.ec-rows{display:grid;gap:7px}
+.ec-row{display:flex;align-items:start;gap:8px;padding:9px 11px;border-radius:8px;font-size:13px;color:var(--ink2);line-height:1.5}
+.ec.high .ec-row{background:#fff5f5}
+.ec.low .ec-row{background:#f0fdf9}
+.ec-row .ren{font-size:11px;color:var(--ink3);font-style:italic;margin-top:2px}
+.ec-arrow{text-align:center;padding:20px 0;font-size:28px;color:var(--teal);font-weight:900}
+
+/* ── PROBLEM TABS ── */
+.prob-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.pt{padding:10px 16px;border:2px solid var(--border);border-radius:var(--r);background:var(--w);font-size:13px;font-weight:800;color:var(--ink2);transition:.15s;cursor:pointer}
+.pt:hover,.pt.sel{border-color:var(--teal);background:var(--teal-l);color:var(--teal)}
+.pt .pe{font-size:10px;font-weight:600;display:block;opacity:.7;font-style:italic}
+.prob-result{display:none;padding:24px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh2)}
+.prob-result.show{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.pr-card{padding:16px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
+.pr-label{font-size:10px;font-weight:900;letter-spacing:.07em;color:var(--ink3);margin-bottom:7px}
+.pr-zh{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.pr-en{font-size:12px;color:var(--teal);font-style:italic;margin-bottom:9px}
+.pr-body{font-size:13px;color:var(--ink2);line-height:1.65}
+.pr-body-en{font-size:11px;color:var(--ink3);font-style:italic;margin-top:4px;line-height:1.55}
+
+/* ── UPDATE ENGINE ── */
+.ue-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.ue-btn{padding:14px;border:2px solid var(--border);border-radius:var(--r);background:var(--w);text-align:center;cursor:pointer;transition:.15s;box-shadow:var(--sh)}
+.ue-btn:hover,.ue-btn.sel{border-color:var(--blue);background:var(--blue-l);color:var(--blue)}
+.ue-btn .uz{font-size:14px;font-weight:800;margin-bottom:3px}
+.ue-btn .ue{font-size:11px;font-weight:600;opacity:.7;font-style:italic}
+.ue-result{display:none;gap:12px;grid-template-columns:1fr 1fr 1fr}
+.ue-result.show{display:grid}
+.uer-card{padding:18px;border-radius:var(--r);border:1px solid var(--border);background:var(--w);box-shadow:var(--sh)}
+.uer-label{font-size:10px;font-weight:900;letter-spacing:.08em;margin-bottom:8px}
+.uer-zh{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.uer-en{font-size:12px;font-style:italic;margin-bottom:10px}
+.uer-body{font-size:13px;color:var(--ink2);line-height:1.65}
+.uer-body-en{font-size:11px;color:var(--ink3);font-style:italic;margin-top:4px}
+
+/* ── PERSONALITY ── */
+.pers-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
+.pers-btn{padding:16px 12px;border:2px solid var(--border);border-radius:var(--r);background:var(--w);text-align:center;cursor:pointer;transition:.15s;box-shadow:var(--sh)}
+.pers-btn:hover,.pers-btn.sel{border-color:var(--violet);background:var(--violet-l)}
+.pers-btn .picon{font-size:22px;display:block;margin-bottom:6px}
+.pers-btn .pzh{font-size:14px;font-weight:800}
+.pers-btn .pen{font-size:10px;color:var(--ink3);font-weight:600;font-style:italic;margin-top:2px}
+.pers-result{display:none;padding:24px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh2)}
+.pers-result.show{display:block}
+
+/* ── UPGRADE TASKS ── */
+.upg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.upg-card{padding:20px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh)}
+.upg-icon{font-size:24px;margin-bottom:8px}
+.upg-zh{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.upg-en{font-size:11px;font-weight:700;letter-spacing:.04em;color:var(--teal);margin-bottom:10px;text-transform:uppercase}
+.upg-desc{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:8px}
+.upg-desc-en{font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:12px}
+.upg-tasks{display:grid;gap:6px}
+.upg-task{display:flex;align-items:start;gap:8px;padding:8px;border-radius:8px;background:var(--bg);font-size:12px;color:var(--ink2)}
+.upg-task input{accent-color:var(--teal);width:15px;height:15px;flex:0 0 auto;margin-top:1px}
+.upg-task .tzh{font-weight:700}
+.upg-task .ten{font-size:10px;color:var(--ink3);font-style:italic;margin-top:2px}
+
+/* ── SYSTEM BUILDER ── */
+.sb-flex{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.sb-input{display:grid;gap:8px}
+.sb-sel-btn{padding:11px 14px;border:2px solid var(--border);border-radius:9px;background:var(--w);text-align:left;cursor:pointer;transition:.15s;font-size:13px;font-weight:700;color:var(--ink2)}
+.sb-sel-btn:hover,.sb-sel-btn.sel{border-color:var(--emerald);background:var(--emerald-l);color:var(--emerald)}
+.sb-sel-btn .sbe{font-size:10px;font-style:italic;display:block;margin-top:2px;opacity:.7}
+.sb-output{display:none;padding:20px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh2)}
+.sb-output.show{display:block}
+.loop-chain{display:flex;flex-direction:column;gap:0}
+.lc-step{padding:12px 14px;border-radius:8px;margin-bottom:4px;font-size:13px;font-weight:700}
+.lc-zh{margin-bottom:2px}
+.lc-en{font-size:11px;font-weight:400;font-style:italic;color:var(--ink3)}
+.lc-arrow{text-align:center;color:var(--emerald);font-size:18px;line-height:1;margin-bottom:4px}
+.lc-note{margin-top:14px;padding:12px;background:var(--emerald-l);border-radius:8px;font-size:13px;color:var(--emerald);font-weight:700}
+.lc-note-en{font-size:11px;font-style:italic;color:var(--teal);margin-top:4px}
+.sb-fix-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.sb-fix{padding:12px;border-radius:9px;background:var(--teal-l);border-left:4px solid var(--teal)}
+.sbf-title{font-size:10px;font-weight:900;letter-spacing:.06em;color:var(--teal);margin-bottom:5px}
+.sbf-zh{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.sbf-en{font-size:11px;font-style:italic;color:var(--ink3)}
+
+/* ── RESOLUTION LENS ── */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:22px}
+.res-card{padding:22px;border-radius:var(--r);border:1px solid var(--border);background:var(--w);box-shadow:var(--sh)}
+.res-label{font-size:10px;font-weight:900;letter-spacing:.08em;color:var(--ink3);margin-bottom:10px}
+.res-low{padding:12px;background:var(--rose-l);border-radius:8px;margin-bottom:8px}
+.res-high{padding:12px;background:var(--emerald-l);border-radius:8px}
+.res-tag{font-size:10px;font-weight:900;letter-spacing:.06em;margin-bottom:5px}
+.res-tag.l{color:var(--rose)}
+.res-tag.h{color:var(--emerald)}
+.res-zh{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.res-en{font-size:11px;font-style:italic;color:var(--ink3);margin-bottom:6px}
+.res-body{font-size:12px;color:var(--ink2);line-height:1.6}
+.res-body-en{font-size:11px;color:var(--ink3);font-style:italic;margin-top:3px}
+.res-full-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.rfl-card{padding:16px;border:1px solid var(--border);border-radius:10px;background:var(--bg)}
+.rfl-topic{font-size:11px;font-weight:900;letter-spacing:.06em;color:var(--teal);margin-bottom:8px}
+.rfl-item{display:flex;gap:6px;align-items:start;margin-bottom:6px;font-size:12px;color:var(--ink2)}
+.rfl-from{flex:1;padding:6px;background:var(--rose-l);border-radius:6px}
+.rfl-to{flex:1;padding:6px;background:var(--emerald-l);border-radius:6px}
+.rfl-arrow{color:var(--teal);font-size:16px;padding-top:5px}
+
+/* ── WISDOM ENGINE ── */
+.we-loop{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:22px}
+.we-step{padding:16px 12px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);text-align:center;box-shadow:var(--sh)}
+.we-num{font-size:10px;font-weight:900;color:var(--ink3);margin-bottom:5px}
+.we-zh{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.we-en{font-size:11px;color:var(--teal);font-style:italic;margin-bottom:8px}
+.we-desc{font-size:12px;color:var(--ink2);line-height:1.55}
+.we-desc-en{font-size:11px;color:var(--ink3);font-style:italic;margin-top:3px}
+.reflect-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.rf-card{padding:18px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh)}
+.rf-q{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:3px}
+.rf-en{font-size:12px;color:var(--blue);font-style:italic;margin-bottom:10px}
+.rf-area{width:100%;min-height:80px;padding:10px;border:1px solid var(--border);border-radius:8px;font:13px/1.6 inherit;color:var(--ink);background:var(--bg);resize:vertical}
+.rf-why{margin-top:8px;font-size:12px;color:var(--ink3);line-height:1.55}
+.rf-why-en{font-size:11px;font-style:italic;margin-top:3px}
+
+/* ── RESOLUTION MATRIX ── */
+.rm-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.rm-card{padding:20px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh)}
+.rm-topic{font-size:12px;font-weight:900;letter-spacing:.06em;color:var(--teal);margin-bottom:12px}
+.rm-chain{display:flex;flex-direction:column;gap:4px}
+.rmc-step{padding:9px 12px;border-radius:7px;background:var(--bg2)}
+.rmc-num{font-size:10px;font-weight:900;color:var(--ink3);margin-bottom:2px}
+.rmc-zh{font-size:13px;font-weight:700;color:var(--ink)}
+.rmc-en{font-size:11px;color:var(--ink3);font-style:italic}
+.rmc-body{font-size:12px;color:var(--ink2);margin-top:4px;line-height:1.55}
+.rmc-arr{text-align:center;color:var(--teal);font-size:16px}
+.rmc-solution{padding:10px 12px;border-radius:7px;background:var(--teal-l);border-left:3px solid var(--teal)}
+.rmc-sol-label{font-size:10px;font-weight:900;letter-spacing:.06em;color:var(--teal);margin-bottom:4px}
+.rmc-sol-zh{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.rmc-sol-en{font-size:11px;color:var(--teal);font-style:italic}
+
+/* ── DASHBOARD ── */
+.dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:22px}
+.dash-card{padding:20px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh)}
+.dash-icon{font-size:24px;margin-bottom:8px}
+.dash-zh{font-size:15px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.dash-en{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--teal);text-transform:uppercase;margin-bottom:10px}
+.dash-desc{font-size:13px;color:var(--ink2);line-height:1.65;margin-bottom:8px}
+.dash-desc-en{font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:12px}
+.dash-score{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.dash-label{font-size:12px;font-weight:700;color:var(--ink2);min-width:64px}
+.dash-bar{flex:1;height:10px;background:var(--bg2);border-radius:5px;overflow:hidden}
+.dash-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--teal),var(--blue));transition:width .4s}
+.dash-val{font-size:12px;font-weight:900;color:var(--teal);min-width:28px;text-align:right}
+.dash-input{display:flex;align-items:center;gap:8px;margin-top:8px}
+.dash-input label{font-size:12px;color:var(--ink2);font-weight:700}
+.dash-range{flex:1;accent-color:var(--teal)}
+.dash-num{font-size:14px;font-weight:900;color:var(--teal);min-width:28px;text-align:center}
+.dash-tip{font-size:11px;color:var(--ink3);font-style:italic;margin-top:6px}
+
+/* ── LIFE OS STACKS ── */
+.os-stacks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.os-stack{padding:22px;border-radius:var(--r);border:1px solid var(--border);background:var(--w);box-shadow:var(--sh)}
+.os-stack-head{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.os-stack-icon{font-size:24px}
+.os-stack-title{font-size:17px;font-weight:900;color:var(--ink);margin-bottom:2px}
+.os-stack-en{font-size:11px;color:var(--ink3);font-style:italic}
+.os-item{display:grid;gap:4px;margin-bottom:10px;padding:12px;border:1px solid var(--border);border-radius:9px;background:var(--bg)}
+.os-item-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.os-item-zh{font-size:13px;font-weight:800;color:var(--ink)}
+.os-item-en{font-size:10px;color:var(--ink3);font-style:italic}
+.os-bar{height:8px;background:var(--bg2);border-radius:4px;overflow:hidden}
+.os-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--teal),var(--blue))}
+.os-desc{font-size:11px;color:var(--ink3);line-height:1.55;margin-top:5px}
+
+/* ── AI COACH ── */
+.ai-box{padding:24px;border:1px solid var(--border);border-radius:var(--r);background:var(--w);box-shadow:var(--sh2);max-width:820px;margin:0 auto}
+.ai-input-row{display:flex;gap:10px;margin-bottom:20px}
+.ai-input-row textarea{flex:1;padding:13px;border:1.5px solid var(--border);border-radius:9px;font:14px/1.6 inherit;color:var(--ink);background:var(--bg);resize:none;min-height:80px}
+.ai-send{padding:0 22px;border:none;border-radius:9px;background:linear-gradient(135deg,var(--teal),var(--blue));color:#fff;font-size:14px;font-weight:800;align-self:stretch}
+.ai-layers{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.ai-layer{padding:16px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg)}
+.ai-layer.active{border-color:var(--teal);background:var(--teal-l)}
+.ail-num{font-size:10px;font-weight:900;letter-spacing:.07em;color:var(--ink3);margin-bottom:6px}
+.ail-zh{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:2px}
+.ail-en{font-size:11px;color:var(--teal);font-style:italic;margin-bottom:8px}
+.ail-q{font-size:13px;color:var(--ink2);line-height:1.65;font-weight:700}
+.ail-q-en{font-size:11px;color:var(--ink3);font-style:italic;margin-top:4px;line-height:1.55}
+.ail-answer{margin-top:12px;padding:12px;background:var(--w);border-radius:8px;border:1px solid var(--border);font-size:13px;color:var(--ink);line-height:1.7;display:none}
+.ail-answer.show{display:block}
+.ail-answer-en{font-size:11px;color:var(--ink3);font-style:italic;margin-top:5px}
+
+/* ── FINAL ── */
+.final{padding:70px 24px;background:linear-gradient(140deg,#071528,#0c2a44,#0d9488);color:#fff;text-align:center}
+.final h2{font-size:clamp(20px,3.8vw,42px);font-weight:900;line-height:1.15;margin-bottom:9px}
+.final .fen{font-size:clamp(12px,1.6vw,18px);color:#99f6e4;font-style:italic;margin-bottom:26px;font-weight:300;letter-spacing:.06em}
+.final .fq{max-width:620px;margin:0 auto;font-size:15px;color:#bfdbfe;line-height:2}
+.final .fq-en{max-width:620px;margin:10px auto 0;font-size:13px;color:#93c5fd;line-height:1.85;font-style:italic}
+
+@media(max-width:960px){
+  .ec-grid,.res-grid,.sb-flex,.os-stacks,.ai-layers{grid-template-columns:1fr}
+  .ue-grid,.pers-grid,.upg-grid,.reflect-grid,.rm-grid,.dash-grid{grid-template-columns:1fr}
+  .we-loop{grid-template-columns:repeat(2,1fr)}
+  .prob-result.show{grid-template-columns:1fr}
+  .ue-result.show{grid-template-columns:1fr}
+  .res-full-grid{grid-template-columns:1fr}
+  .sb-fix-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .prob-tabs{gap:6px}
+  .we-loop{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-i">
+    <div class="logo">
+      <div class="logo-mark">⚡</div>
+      <div>
+        <div class="logo-txt">生成人生 OS</div>
+        <div class="logo-sub">Generative Life OS</div>
+      </div>
+    </div>
+    <div class="nav-links">
+      <button class="nl" onclick="go('#entropy')">熵值診斷</button>
+      <button class="nl" onclick="go('#problems')">問題掃描</button>
+      <button class="nl" onclick="go('#update')">更新引擎</button>
+      <button class="nl" onclick="go('#personality')">人格升維</button>
+      <button class="nl" onclick="go('#system')">結構生成</button>
+      <button class="nl" onclick="go('#resolution')">解析度</button>
+      <button class="nl" onclick="go('#wisdom')">智慧閉環</button>
+      <button class="nl" onclick="go('#matrix')">解析矩陣</button>
+      <button class="nl" onclick="go('#dashboard')">低熵儀表板</button>
+      <button class="nl" onclick="go('#lifeos')">人生作業系統</button>
+      <button class="nl" onclick="go('#aicoach')">AI教練</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="h-eye">GENERATIVE LIFE OS · 從生存模式進入生成模式</div>
+  <h1>生成人生 OS<br><span class="teal">Generative Life OS</span></h1>
+  <div class="hero-en">From Survival Mode to Generative Mode</div>
+  <p class="hero-sub">不是知識APP。不是心靈APP。<br>是幫你從高熵生存模式，升級成低熵生成模式，建立長程複利人生的人生作業系統。</p>
+  <p class="hero-sub-en">Not a knowledge app. Not a wellness app.<br>A life operating system that upgrades you from high-entropy survival mode to low-entropy generative mode — building a long-term compounding life.</p>
+  <div class="h-flow">
+    <span class="hfs">高熵生存模式<br><small style="font-weight:400;font-size:10px">High-Entropy Survival</small></span>
+    <span class="hfa">→</span>
+    <span class="hfs">低熵生成模式<br><small style="font-weight:400;font-size:10px">Low-Entropy Generative</small></span>
+    <span class="hfa">→</span>
+    <span class="hfs">持續更新<br><small style="font-weight:400;font-size:10px">Continuous Updating</small></span>
+    <span class="hfa">→</span>
+    <span class="hfs">智慧湧現<br><small style="font-weight:400;font-size:10px">Wisdom Emergence</small></span>
+    <span class="hfa">→</span>
+    <span class="hfs">人格自由<br><small style="font-weight:400;font-size:10px">Character Freedom</small></span>
+  </div>
+  <div class="h-problems">
+    <span class="hp">焦慮 Anxiety</span><span class="hp">迷茫 Lost</span><span class="hp">拖延 Procrastination</span><span class="hp">情緒失控 Emotional Chaos</span><span class="hp">人生卡關 Life Blockage</span><span class="hp">關係耗能 Draining Relationships</span><span class="hp">創傷重播 Trauma Replay</span><span class="hp">注意力破碎 Fragmented Focus</span>
+  </div>
+  <div class="h-quote">
+    <p>高熵的人重複昨天。低熵的人生成明天。<br>差別不在努力，而在作業系統的版本。</p>
+    <p class="en">High-entropy people repeat yesterday. Low-entropy people generate tomorrow.<br>The difference is not effort — it is the version of the operating system.</p>
+  </div>
+</section>
+
+<div class="wrap">
+
+<!-- ENTROPY COMPARE -->
+<section class="sec" id="entropy">
+  <div class="sh">
+    <div class="etag">ENTROPY DIAGNOSIS · 熵值診斷</div>
+    <h2>高熵生存模式 vs 低熵生成模式</h2>
+    <p>熵（Entropy）是系統的混亂程度。高熵的人生充滿重複、耗損和無序；低熵的人生充滿結構、生成和自由。你現在在哪裡？</p>
+    <p class="pe">Entropy is the degree of disorder in a system. A high-entropy life is full of repetition, depletion, and disorder; a low-entropy life is full of structure, generation, and freedom. Where are you now?</p>
+  </div>
+  <div class="ec-grid">
+    <div class="ec high">
+      <div class="ec-badge">🔴 高熵 · High Entropy</div>
+      <div class="ec-title">生存模式</div>
+      <div class="ec-title-en">Survival Mode — Repeating Yesterday</div>
+      <div class="ec-rows" id="ecHighRows"></div>
+    </div>
+    <div class="ec low">
+      <div class="ec-badge">🟢 低熵 · Low Entropy</div>
+      <div class="ec-title">生成模式</div>
+      <div class="ec-title-en">Generative Mode — Creating Tomorrow</div>
+      <div class="ec-rows" id="ecLowRows"></div>
+    </div>
+  </div>
+</section>
+<div class="div"></div>
+
+<!-- PROBLEM SCANNER -->
+<section class="sec" id="problems">
+  <div class="sh">
+    <div class="etag">PROBLEM SCANNER · 問題掃描器</div>
+    <h2>你現在遇到的問題，它的底層結構是什麼？</h2>
+    <p>每個人生問題都有底層結構。找到結構，問題才有解法。點選你現在最想解決的問題。</p>
+    <p class="pe">Every life problem has an underlying structure. Find the structure and the problem has a solution. Click the problem you most want to solve now.</p>
+  </div>
+  <div class="prob-tabs" id="probTabs"></div>
+  <div class="prob-result" id="probResult"></div>
+</section>
+<div class="div"></div>
+
+<!-- UPDATE ENGINE -->
+<section class="sec" id="update">
+  <div class="sh">
+    <div class="etag">MODULE 01 · UPDATE ENGINE · 更新引擎</div>
+    <h2>⚙️ 更新引擎 · 停止人生重播</h2>
+    <p>人生重播是因為你還在用舊模型對應新現實。選一個今天感覺「過期」的領域，APP幫你從舊模型升級到新模型，並生成今日行動。</p>
+    <p class="pe">Life replay happens because you're using old models to meet new realities. Select a domain that feels "expired" today — the app upgrades you from old model to new model and generates today's action.</p>
+  </div>
+  <div class="ue-grid" id="ueGrid"></div>
+  <div class="ue-result" id="ueResult"></div>
+</section>
+<div class="div"></div>
+
+<!-- PERSONALITY EVOLUTION -->
+<section class="sec" id="personality">
+  <div class="sh">
+    <div class="etag">MODULE 02 · PERSONALITY EVOLUTION · 人格升維</div>
+    <h2>🧬 人格升維 · 從高熵人格進入低熵人格</h2>
+    <p>你的人格是你的作業系統核心。不同的驅動力產生不同的人生模式。診斷你現在的驅動力，然後選擇升維路徑。</p>
+    <p class="pe">Your personality is the core of your operating system. Different driving forces produce different life patterns. Diagnose your current driver, then choose your evolution path.</p>
+  </div>
+  <div class="pers-grid" id="persGrid"></div>
+  <div class="pers-result" id="persResult"></div>
+  <div style="margin-top:24px">
+    <div class="sh" style="margin-bottom:16px">
+      <h2 style="font-size:20px">升維能力訓練 · Personality Upgrade Tasks</h2>
+      <p style="font-size:13px">這六種能力是從高熵人格走向低熵人格的核心能力。每天選一個訓練。</p>
+      <p class="pe" style="font-size:11px">These six abilities are the core of evolving from high-entropy to low-entropy personality. Train one each day.</p>
+    </div>
+    <div class="upg-grid" id="upgGrid"></div>
+  </div>
+</section>
+<div class="div"></div>
+
+<!-- SYSTEM BUILDER -->
+<section class="sec" id="system">
+  <div class="sh">
+    <div class="etag">MODULE 03 · SYSTEM BUILDER · 結構生成器</div>
+    <h2>🔗 結構生成器 · 從混亂進入系統</h2>
+    <p>每一個讓你困擾的問題，背後都有一個系統結構在運作。找到這個結構的迴圈和槓桿點，你才能真正改變它，而不是一直在出口處撲火。</p>
+    <p class="pe">Every problem that troubles you has a system structure running beneath it. Find the loop and leverage point of this structure — only then can you truly change it, rather than always fighting fires at the exit.</p>
+  </div>
+  <div class="sb-flex">
+    <div class="sb-input">
+      <div style="font-size:13px;font-weight:800;color:var(--ink);margin-bottom:10px">選擇你的問題類型 · Select Your Problem Type</div>
+      <div id="sbBtns"></div>
+    </div>
+    <div class="sb-output" id="sbOutput"></div>
+  </div>
+</section>
+<div class="div"></div>
+
+<!-- RESOLUTION LENS -->
+<section class="sec" id="resolution">
+  <div class="sh">
+    <div class="etag">MODULE 04 · RESOLUTION LENS · 解析度升維</div>
+    <h2>🔭 解析度升維 · 看見普通人看不見的東西</h2>
+    <p>解析度是你看問題的精細程度。解析度越高，你越能看見問題的根源而不只是表象，越能找到有效的介入點而不只是應急反應。</p>
+    <p class="pe">Resolution is the fineness with which you see problems. Higher resolution means seeing root causes rather than just surface symptoms — finding effective intervention points rather than reactive responses.</p>
+  </div>
+  <div class="res-full-grid" id="resFullGrid"></div>
+</section>
+<div class="div"></div>
+
+<!-- WISDOM ENGINE -->
+<section class="sec" id="wisdom">
+  <div class="sh">
+    <div class="etag">MODULE 05 · WISDOM ENGINE · 智慧生成器</div>
+    <h2>🌀 智慧生成器 · 建立動態閉環</h2>
+    <p>智慧不是知識的累積，而是閉環的品質。每一圈觀察→建模→預測→行動→回饋→修正→更新，都讓你的系統提升一個層次。</p>
+    <p class="pe">Wisdom is not the accumulation of knowledge — it is the quality of the loop. Each cycle of observe → model → predict → act → feedback → correct → update raises your system one level.</p>
+  </div>
+  <div class="we-loop" id="weLoop"></div>
+  <div style="margin-top:24px">
+    <div class="sh" style="margin-bottom:16px">
+      <h2 style="font-size:20px">每日智慧反思 · Daily Wisdom Reflection</h2>
+      <p style="font-size:13px">每天花5分鐘完成這個反思，你的智慧閉環就在運轉。一年後，你會讓自己驚訝。</p>
+      <p class="pe" style="font-size:11px">Spend 5 minutes on this reflection daily and your wisdom loop is running. In a year, you will surprise yourself.</p>
+    </div>
+    <div class="reflect-grid" id="reflectGrid"></div>
+  </div>
+</section>
+<div class="div"></div>
+
+<!-- RESOLUTION MATRIX -->
+<section class="sec" id="matrix">
+  <div class="sh">
+    <div class="etag">MODULE 06 · RESOLUTION MATRIX · 人生解析矩陣</div>
+    <h2>🧩 人生解析矩陣 · 把問題看深</h2>
+    <p>每個問題都有多個解析層次。從表面症狀往下挖，找到底層結構，才能找到真正有效的解法，而不是一直在表面貼膠布。</p>
+    <p class="pe">Every problem has multiple levels of depth. Dig from surface symptoms down to underlying structure — only then can you find solutions that actually work, rather than constantly applying surface bandages.</p>
+  </div>
+  <div class="rm-grid" id="rmGrid"></div>
+</section>
+<div class="div"></div>
+
+<!-- LOW ENTROPY DASHBOARD -->
+<section class="sec" id="dashboard">
+  <div class="sh">
+    <div class="etag">MODULE 07 · LOW ENTROPY DASHBOARD · 低熵儀表板</div>
+    <h2>📊 生命低熵儀表板 · 六大核心指標</h2>
+    <p>這六個指標是你生命作業系統的健康指數。每天評分，追蹤趨勢，你就能看見你的成長軌跡，也能及早發現哪裡需要關注。</p>
+    <p class="pe">These six indicators are the health metrics of your life operating system. Score daily, track trends — and you'll see your growth trajectory and spot where attention is needed before problems escalate.</p>
+  </div>
+  <div class="dash-grid" id="dashGrid"></div>
+</section>
+<div class="div"></div>
+
+<!-- LIFE OS -->
+<section class="sec" id="lifeos">
+  <div class="sh">
+    <div class="etag">MODULE 08 · LIFE OS · 人生作業系統</div>
+    <h2>💻 人生作業系統 · 三層同步升級</h2>
+    <p>你的人生由三個堆疊組成：身份層（我是誰）、資源層（我有什麼）、健康層（我的身體）。三層同步升級，才是真正的人生升級。</p>
+    <p class="pe">Your life is composed of three stacks: Identity (who you are), Resources (what you have), Health (your body). Only when all three are upgraded simultaneously does real life upgrading occur.</p>
+  </div>
+  <div class="os-stacks" id="osStacks"></div>
+</section>
+<div class="div"></div>
+
+<!-- AI COACH -->
+<section class="sec" id="aicoach">
+  <div class="sh">
+    <div class="etag">AI COACH · AI四層教練系統</div>
+    <h2>🤖 AI四層教練 · 把問題從4個維度分析</h2>
+    <p>AI教練不只回答你的問題，而是從4個層次幫你看清楚問題的完整結構：本體層→結構層→機制層→行動層。</p>
+    <p class="pe">The AI coach doesn't just answer your questions — it helps you see the complete structure of your problem across 4 dimensions: ontological → structural → mechanical → action.</p>
+  </div>
+  <div class="ai-box">
+    <div class="ai-input-row">
+      <textarea id="aiInput" placeholder="輸入你今天最困擾的事，例如：我很焦慮、我一直拖延、我在關係裡總是很累⋯⋯&#10;Enter what troubles you most today, e.g.: I'm anxious, I keep procrastinating, I feel drained in relationships..."></textarea>
+      <button class="ai-send" onclick="analyzeAI()">分析 · Analyze ➤</button>
+    </div>
+    <div class="ai-layers" id="aiLayers"></div>
+  </div>
+</section>
+
+</div><!-- end wrap -->
+
+<!-- FINAL -->
+<section class="final">
+  <div class="wrap">
+    <h2>停止重播。開始生成。<br>Stop Replaying. Start Generating.</h2>
+    <div class="fen">From High-Entropy Survival to Low-Entropy Generative Life — The Ultimate OS Upgrade</div>
+    <p class="fq">
+      高熵的人生是重播。<br>低熵的人生是生成。<br><br>
+      差別不在你有多努力，<br>而在你的作業系統是幾版。<br><br>
+      <strong style="color:#5eead4">每天升級一點點。長程複利，人格自由。</strong>
+    </p>
+    <p class="fq-en">
+      A high-entropy life replays the past.<br>
+      A low-entropy life generates the future.<br><br>
+      The difference is not how hard you work —<br>
+      it is which version of operating system you're running.<br><br>
+      <em>Upgrade a little every day. Long-term compounding. Character freedom.</em>
+    </p>
+  </div>
+</section>
+
+<script>
+function go(id){document.querySelector(id)?.scrollIntoView({behavior:'smooth'})}
+
+// ─── DATA ───────────────────────────────────────
+const EC_HIGH=[
+  ['情緒驅動決策，被感受帶著走','Decisions driven by emotions, swept away by feelings'],
+  ['生活在自動反應模式中，重複同樣的模式','Living in automatic reaction mode, repeating the same patterns'],
+  ['注意力破碎，難以進入深度工作','Fragmented attention, unable to enter deep work'],
+  ['對未來焦慮，對過去後悔，活不在當下','Anxious about future, regretful about past, unable to be present'],
+  ['用比較和競爭定義自我價值','Defining self-worth through comparison and competition'],
+  ['在關係中尋找安全感和認可','Seeking security and approval from relationships'],
+  ['遇到挫折容易崩潰或放棄','Easy to collapse or give up when facing setbacks'],
+  ['知道但做不到，知行嚴重分離','Knowing but not doing — severe gap between knowledge and action'],
+  ['把精力投入在低槓桿的忙碌上','Investing energy in low-leverage busyness'],
+  ['生活沒有結構，每天被緊急事務追著跑','Life without structure, chased daily by urgent matters'],
+];
+const EC_LOW=[
+  ['主體感強，主動選擇自己的回應','Strong sense of agency, actively choosing responses'],
+  ['有意識地設計生活，而不是被生活設計','Consciously designing life rather than being designed by it'],
+  ['能進入深度專注，有長程視角','Able to enter deep focus, with long-term perspective'],
+  ['活在當下，對未來有清晰意圖','Present-focused, with clear intentions for the future'],
+  ['以自己的價值觀和使命為核心','Centered on personal values and mission'],
+  ['在關係中給予自由，也擁有自己','Giving freedom in relationships while owning yourself'],
+  ['把挫折視為系統數據，快速修正','Treating setbacks as system data, correcting quickly'],
+  ['知行合一，智慧落地成行動','Knowledge and action unified, wisdom grounded in action'],
+  ['聚焦在高槓桿的少數關鍵事務上','Focused on the high-leverage few critical things'],
+  ['生活有結構，用深度工作創造價值','Structured life, creating value through deep work'],
+];
+
+const PROBLEMS=[
+  {zh:'焦慮',en:'Anxiety',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'心跳加速、難以集中、對未來感到威脅。',en:'Racing heart, difficulty focusing, feeling threatened by the future.'},
+     structure:{zh:'底層結構 · Structure',body:'你的預測系統在用最壞的結果代表所有可能。預測品質低 → 焦慮高。',en:'Your prediction system is using worst-case as representative of all possibilities. Low prediction quality → high anxiety.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'高警報神經系統→注意力破碎→執行力下降→工作落後→更焦慮→迴圈強化。',en:'High-alert nervous system → fragmented attention → reduced execution → work backlog → more anxiety → loop reinforces.'},
+     action:{zh:'今日行動 · Action',body:'今天找出一個讓你最焦慮的具體預測，評估它的真實機率（0-100%），然後寫出3個可能的結果，不只是最壞的。',en:'Today identify the one specific prediction causing most anxiety. Assess its actual probability (0-100%), then write 3 possible outcomes — not just the worst.'},
+   }},
+  {zh:'迷茫',en:'Lost',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'不知道要做什麼、感覺選項太多、對方向沒有把握。',en:'Not knowing what to do, feeling overwhelmed by options, uncertain about direction.'},
+     structure:{zh:'底層結構 · Structure',body:'你的身份地圖不夠清晰，或者你的地圖已經過期但還沒更新。',en:'Your identity map isn\'t clear enough, or your map has expired but hasn\'t been updated.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'身份模糊→決策困難→行動延遲→自我懷疑加深→更迷茫→迴圈。',en:'Vague identity → difficulty deciding → delayed action → deepening self-doubt → more confusion → loop.'},
+     action:{zh:'今日行動 · Action',body:'今天完成這個句子：「如果我是一個__的人，我今天會做什麼？」把這個答案當成你今天的第一個行動。',en:'Today complete this sentence: "If I were someone who ___, what would I do today?" Use this answer as your first action today.'},
+   }},
+  {zh:'拖延',en:'Procrastination',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'知道要做但不做、感覺被任務的重量壓住、總是「等一下再說」。',en:'Knowing what to do but not doing it, feeling crushed by task weight, always "I\'ll do it later."'},
+     structure:{zh:'底層結構 · Structure',body:'拖延不是懶，是完美主義（怕做不好）、或恐懼（怕開始後發現自己不行）的防禦機制。',en:'Procrastination is not laziness — it is a defense mechanism of perfectionism (fear of doing it wrong) or fear (fear of discovering you\'re not capable after starting).'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'完美標準過高→任何起步都感覺不夠好→迴避→時間壓力增加→更難開始→完美標準更高。',en:'Standards too high → any start feels insufficient → avoidance → time pressure increases → harder to start → standards rise higher.'},
+     action:{zh:'今日行動 · Action',body:'設定「不完美開始計時器」：選一件你一直拖的事，只給自己5分鐘做一個「足夠差」的開始。只要開始，動力就會出現。',en:'Set an "imperfect start timer": choose one thing you\'ve been procrastinating, give yourself only 5 minutes to make a "good enough bad" start. Once started, momentum appears.'},
+   }},
+  {zh:'情緒失控',en:'Emotional Chaos',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'情緒激烈、難以控制反應、事後後悔自己的行為。',en:'Intense emotions, difficulty controlling reactions, regretting behavior afterward.'},
+     structure:{zh:'底層結構 · Structure',body:'你的情緒承載力（窗口）比你需要承載的壓力小。當刺激超過窗口，自動反應就啟動。',en:'Your emotional tolerance window is smaller than the pressure you need to carry. When stimulation exceeds the window, automatic reaction activates.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'壓力累積→情緒窗口縮小→小刺激引發大反應→衝突或後悔→自我批評→壓力更大→窗口更小。',en:'Stress accumulates → emotional window narrows → small trigger causes large reaction → conflict or regret → self-criticism → more stress → window narrows further.'},
+     action:{zh:'今日行動 · Action',body:'今天練習「暫停3秒」技術：在任何情緒反應之前，深呼吸3秒。這3秒就是你從反應者升級成回應者的空間。',en:'Today practice the "3-second pause" technique: before any emotional reaction, breathe deeply for 3 seconds. These 3 seconds are your space to upgrade from reactor to responder.'},
+   }},
+  {zh:'人生卡關',en:'Life Blockage',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'感覺哪裡都走不通、試了很多方法都沒用、不知道問題在哪裡。',en:'Feeling stuck everywhere, trying many methods with no results, not knowing where the problem is.'},
+     structure:{zh:'底層結構 · Structure',body:'你在用一個過期的身份模型對應新的人生挑戰。舊的身份創造了目前的現實，舊的身份也無法超越目前的現實。',en:'You\'re using an expired identity model to meet new life challenges. The old identity created your current reality — and the old identity cannot transcend it.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'舊模型→同樣的決策→同樣的行動→同樣的結果→繼續用舊模型解釋→強化舊模型。',en:'Old model → same decisions → same actions → same results → continue explaining with old model → reinforces old model.'},
+     action:{zh:'今日行動 · Action',body:'今天問自己：「如果現在卡關的狀況需要一個更大的自己才能解決，那個更大的自己是誰？他今天會做什麼？」',en:'Today ask yourself: "If the current blockage requires a bigger version of me to solve it, who is that bigger version? What would that version do today?"'},
+   }},
+  {zh:'關係耗能',en:'Draining Relationships',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'和某些人互動之後感覺精力被抽乾、在關係裡失去自己、不敢說真話。',en:'Feeling energy drained after interacting with certain people, losing yourself in relationships, unable to speak honestly.'},
+     structure:{zh:'底層結構 · Structure',body:'你在關係裡運行「討好模式」或「恐懼驅動模式」。你的內心需求和你的外部表現之間有巨大的落差，這個落差就是耗能的來源。',en:'You\'re running "people-pleasing mode" or "fear-driven mode" in relationships. There is a huge gap between your inner needs and your outer presentation — this gap is the source of depletion.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'隱藏真實需求→壓抑情緒→積累不滿→爆發或疏離→關係受損→更害怕真實→更討好→更耗能。',en:'Hide real needs → suppress emotions → accumulate resentment → burst or withdraw → relationship damaged → more afraid to be real → more people-pleasing → more depletion.'},
+     action:{zh:'今日行動 · Action',body:'今天在一段關係裡，說一件你通常不會說的真實想法或感受。從小的事情開始，練習讓真實的你出現在關係裡。',en:'Today in one relationship, say one honest thought or feeling you usually wouldn\'t. Start small — practice letting the real you appear in relationships.'},
+   }},
+  {zh:'創傷重播',en:'Trauma Replay',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'同樣的痛苦模式一再出現、被觸發時反應過度、感覺被過去的事情控制。',en:'Same painful patterns recurring, overreacting when triggered, feeling controlled by past events.'},
+     structure:{zh:'底層結構 · Structure',body:'創傷是未被整合的舊事件的神經記憶，在神經層面它仍然是「現在進行式」。當有相似的刺激，你的神經系統啟動舊的生存反應。',en:'Trauma is unintegrated neural memories of old events — at the neural level they remain "present tense." When similar stimuli occur, your nervous system activates old survival responses.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'觸發刺激→神經系統的舊記憶激活→自動生存反應（戰/逃/凍）→當下行為被過去劇本控制→事後困惑和羞愧→更難面對觸發。',en:'Trigger stimulus → old neural memory activates → automatic survival response (fight/flight/freeze) → present behavior controlled by past script → confusion and shame afterward → harder to face triggers.'},
+     action:{zh:'今日行動 · Action',body:'今天寫下一個你反覆出現的痛苦模式，然後問：「這個模式在什麼時候第一次出現？它當時是在保護我什麼？現在它還需要保護我嗎？」',en:'Today write down one recurring painful pattern. Then ask: "When did this pattern first appear? What was it protecting me from then? Does it still need to protect me now?"'},
+   }},
+  {zh:'注意力破碎',en:'Fragmented Focus',
+   layers:{
+     surface:{zh:'表面症狀 · Surface',body:'無法長時間集中、容易分心、一天過去感覺什麼都沒做完。',en:'Unable to concentrate for long, easily distracted, days passing with nothing completed.'},
+     structure:{zh:'底層結構 · Structure',body:'你的注意力生態系統被設計來服務即時滿足（短視頻、訊息通知），而不是深度工作。注意力是稀缺資源，但你把它分散了。',en:'Your attention ecology is designed to serve instant gratification (short videos, notifications) rather than deep work. Attention is a scarce resource, but you have distributed it.'},
+     mechanism:{zh:'運作機制 · Mechanism',body:'頻繁切換注意力→深度工作窗口無法開啟→工作效能低→補償性娛樂→刺激閾值升高→更難進入專注→生產力持續下降。',en:'Frequent attention switching → deep work window can\'t open → low work efficacy → compensatory entertainment → stimulation threshold rises → harder to focus → productivity continuously declining.'},
+     action:{zh:'今日行動 · Action',body:'今天設定一個90分鐘的「無打擾時間」：手機飛航、關閉通知、只做一件最重要的事。完成後記錄感受。',en:'Today set a 90-minute "no interruption block": phone on airplane mode, notifications off, do only the one most important thing. Record how it feels afterward.'},
+   }},
+];
+
+const UE_DOMAINS=[
+  {zh:'關係模型',en:'Relationship',old:'「如果我對他好，他就應該對我好。」',olden:'"If I\'m good to them, they should be good to me."',issue:'這是「等值交換」模型，但關係是有機系統，不是數學方程式。',issueen:'This is an "equal exchange" model, but relationships are organic systems, not math equations.',newModel:'「每個人根據他們目前的能力給予，而不是根據你的付出給予。我的任務是找到能力相符的連結。」',newModelen:'"Each person gives according to their current capacity, not according to what you give. My task is to find connections of matched capacity."',action:'今日行動：評估你的重要關係，哪些是「能量互補」的，哪些是「能量單向流出」的。做出相應調整。',actionen:'Today\'s action: Evaluate key relationships — which are "energy complementary," which are "energy one-directional." Make appropriate adjustments.'},
+  {zh:'健康模型',en:'Health',old:'「我身體有問題是因為基因或運氣不好。」',olden:'"My health problems are due to bad genes or bad luck."',issue:'這個模型讓你成為被動的受害者，忽略了生活方式對健康的巨大影響。',issueen:'This model makes you a passive victim, ignoring the enormous impact of lifestyle on health.',newModel:'「健康是一個可以管理的系統，包含睡眠、運動、營養、壓力和情緒。我可以通過改變輸入來改善輸出。」',newModelen:'"Health is a manageable system encompassing sleep, exercise, nutrition, stress, and emotions. I can improve outputs by changing inputs."',action:'今日行動：找出你的健康系統裡影響最大的一個輸入（最可能是睡眠），今天改善它一個小步驟。',actionen:'Today\'s action: Find the single highest-impact input in your health system (most likely sleep). Improve it by one small step today.'},
+  {zh:'金錢模型',en:'Money',old:'「賺錢是辛苦的，有錢的人是幸運的或不道德的。」',olden:'"Earning money is hard, wealthy people are lucky or unethical."',issue:'這個信念確保你和財務豐盛永遠保持距離，因為你的潛意識不允許你成為「那種人」。',issueen:'This belief ensures you maintain distance from financial abundance — your subconscious won\'t let you become "that kind of person."',newModel:'「金錢是我創造的價值的量化。我創造的價值越多，回饋越大。賺錢是正當的，也是我使命的延伸。」',newModelen:'"Money is a quantification of the value I create. The more value I create, the greater the return. Earning is legitimate and an extension of my mission."',action:'今日行動：找出你對金錢最根深蒂固的一個限制信念，問它從哪裡來，然後寫出一個更新版本。',actionen:'Today\'s action: Identify your deepest limiting money belief, ask where it came from, then write an updated version.'},
+  {zh:'工作模型',en:'Work',old:'「努力工作就會成功，努力是最重要的。」',olden:'"Working hard equals success — effort is what matters most."',issue:'努力是必要條件，但方向和槓桿比努力更重要。錯誤方向上的努力只會更快到達錯誤的地方。',issueen:'Effort is necessary but not sufficient. Direction and leverage matter more than effort. Working hard in the wrong direction only gets you to the wrong place faster.',newModel:'「智慧工作 > 努力工作。先找到正確方向和高槓桿點，再在正確的地方全力以赴。」',newModelen:'"Working smart > working hard. Find the right direction and high leverage first, then give full effort in the right place."',action:'今日行動：列出你今天的任務，評估哪一個的槓桿率最高（做了之後其他事情變容易），把它放在第一位。',actionen:'Today\'s action: List today\'s tasks, evaluate which has the highest leverage ratio (which makes everything else easier when done first), and put it first.'},
+  {zh:'學習模型',en:'Learning',old:'「我學得比別人慢，我不擅長學習。」',olden:'"I learn slower than others — I\'m not good at learning."',issue:'這個標籤是固定型思維，讓你在開始之前就放棄探索適合自己的學習方式。',issueen:'This label is fixed mindset, causing you to give up exploring learning methods that suit you before even beginning.',newModel:'「沒有學不好的人，只有沒找到適合自己方式的人。學習能力是可以培養的，不是固定的天賦。」',newModelen:'"There are no bad learners — only people who haven\'t found their method yet. Learning ability is cultivable, not a fixed talent."',action:'今日行動：選一件你一直覺得「自己學不好」的事，今天用完全不同的方式嘗試學它一次（視覺/聽覺/動覺/教學法）。',actionen:'Today\'s action: Choose one thing you\'ve always felt "bad at learning." Today try learning it using a completely different method (visual/audio/kinesthetic/teaching method).'},
+  {zh:'人生模型',en:'Life',old:'「人生就是這樣，我沒辦法改變什麼。」',olden:'"Life is just like this — I can\'t change anything."',issue:'這個模型把你放在生命的旁觀者位置，而不是設計者位置。它是一個「習得性無助」的模型。',issueen:'This model places you in the bystander position of life rather than the designer position. It is a "learned helplessness" model.',newModel:'「我的生命是我設計的。我不能控制所有事情，但我可以控制我的回應、我的注意力和我的選擇。」',newModelen:'"My life is what I design. I cannot control everything, but I can control my responses, my attention, and my choices."',action:'今日行動：找出一件你覺得「沒辦法」的事，然後問：「在這個情境裡，我能控制的最小一件事是什麼？」然後做它。',actionen:'Today\'s action: Find one thing you feel "can\'t be changed," then ask: "In this situation, what is the smallest thing I can control?" Then do it.'},
+];
+
+const PERSONALITIES=[
+  {icon:'😤',zh:'情緒驅動',en:'Emotion-Driven',desc:'被當下情緒控制決策，衝動反應後後悔，生活充滿不必要的混亂。',descen:'Decisions controlled by current emotions, regret after impulsive reactions, life full of unnecessary chaos.',path:'升維路徑：從「情緒告訴我做」→「情緒告訴我有訊息要讀」。學習把情緒當訊號而不是命令。',pathen:'Evolution path: "Emotion tells me to act" → "Emotion tells me there\'s a signal to read." Learn to treat emotions as signals, not commands.',tasks:['每次情緒湧現時，先暫停3秒再回應 · Pause 3 seconds before responding to any emotion','今天找出一個情緒，問它想告訴你什麼 · Find one emotion today, ask what it\'s telling you']},
+  {icon:'📊',zh:'比較驅動',en:'Comparison-Driven',desc:'把別人的成就當成自己價值的基準，永遠在追趕一個移動的目標，焦慮不斷。',descen:'Using others\' achievements as benchmarks for self-worth, always chasing a moving target, constant anxiety.',path:'升維路徑：從「我和別人比」→「我和昨天的自己比」。你的比較對象只有一個：過去的你。',pathen:'Evolution path: "I compare myself to others" → "I compare myself to yesterday\'s me." Your only comparison point is your past self.',tasks:['今天找出一個你在做的比較，問：這個比較對我有幫助嗎？ · Find one comparison you\'re making today. Ask: Does this help me?','寫下3件昨天的你做不到但今天的你做得到的事 · Write 3 things yesterday\'s you couldn\'t do that today\'s you can']},
+  {icon:'😰',zh:'恐懼驅動',en:'Fear-Driven',desc:'用逃避失敗、逃避被拒絕、逃避批評來做決定。看起來很謹慎，實際上是高熵的。',descen:'Making decisions by avoiding failure, rejection, and criticism. Seems cautious — actually high-entropy.',path:'升維路徑：從「我怎麼避免最壞的結果」→「我怎麼創造最好的結果」。從逃避驅動走向創造驅動。',pathen:'Evolution path: "How do I avoid the worst outcome" → "How do I create the best outcome." From avoidance-driven to creation-driven.',tasks:['今天找出一個因為害怕而一直沒做的決定，評估最壞的真實結果 · Find one decision you\'ve avoided from fear. Assess the real worst outcome.','問自己：如果確定不會失敗，我今天會做什麼？ · Ask: If failure were impossible, what would I do today?']},
+  {icon:'😧',zh:'焦慮驅動',en:'Anxiety-Driven',desc:'永遠在為沒有發生的事擔心，活在「萬一⋯⋯」的思維裡，精力大量消耗在想像的威脅上。',descen:'Always worried about things that haven\'t happened, living in "what if..." thinking, enormous energy consumed by imagined threats.',path:'升維路徑：從「我在預測災難」→「我在準備應對」。預測可以是資源，不必然是焦慮。',pathen:'Evolution path: "I\'m predicting disaster" → "I\'m preparing to respond." Prediction can be a resource, not necessarily anxiety.',tasks:['把你最焦慮的一件事寫出來，評估它發生的真實機率 · Write out your most anxious concern. Assess its actual probability.','為最壞的3個結果各寫一個應對計畫，焦慮就會降低 · Write a response plan for each of your 3 worst outcomes. Anxiety drops.']},
+  {icon:'⚡',zh:'生成驅動',en:'Generation-Driven',desc:'從創造價值出發做決定，有清晰的意圖，把資源投入在可以複利的地方。',descen:'Making decisions from value creation, clear intentions, investing resources where compounding occurs.',path:'你已經在生成模式。任務是：找到你的高槓桿領域，深度聚焦，讓複利效應發揮。',pathen:'You\'re already in generative mode. Your task: find your high-leverage domain, focus deeply, let compounding work.',tasks:['今天確認你最高槓桿的一個行動，把90%的精力放在它上面 · Confirm your highest-leverage action today. Put 90% of energy there.','為你的最重要目標設定一個90天計畫 · Set a 90-day plan for your most important goal']},
+  {icon:'💎',zh:'價值驅動',en:'Value-Driven',desc:'以清晰的核心價值觀為羅盤做決定，在短期吸引力和長期意義之間選擇長期。',descen:'Using clear core values as a compass for decisions, choosing long-term meaning over short-term attraction.',path:'你已經有了價值觀羅盤。任務是：確保你的日常行動和你的核心價值觀一致，消除那些不一致的事。',pathen:'You already have a values compass. Your task: ensure daily actions align with core values and eliminate those that don\'t.',tasks:['今天列出你的5個核心價值觀，評估你的今日計畫有多少和它們一致 · List your 5 core values. Evaluate how much today\'s plan aligns with them.','找出一件和你的價值觀不一致的事，今天減少它 · Find one thing misaligned with your values. Reduce it today.']},
+  {icon:'🌟',zh:'使命驅動',en:'Mission-Driven',desc:'有清晰的人生使命，每個決定都圍繞「這對我的使命有沒有貢獻」來判斷。是最低熵的狀態。',descen:'Clear life mission, every decision evaluated against "does this contribute to my mission." The lowest-entropy state.',path:'你在最高的驅動狀態。任務是：保護這個狀態，設計你的環境來支持使命，並幫助他人找到他們的使命。',pathen:'You\'re at the highest driver state. Your task: protect this state, design your environment to support your mission, and help others find theirs.',tasks:['今天確認你的使命陳述，以一句話說清楚：我的使命是⋯⋯ · Confirm your mission statement in one sentence: My mission is...','找出今天一個最接近你使命的行動，把它放在日程第一位 · Find today\'s one action closest to your mission. Put it first on your schedule.']},
+];
+
+const UPG_ABILITIES=[
+  {icon:'🧘',zh:'情緒承載力',en:'Emotional Capacity',desc:'承載困難情緒而不崩潰或麻木的能力。承載力越大，你能做的事就越大。',descen:'The ability to carry difficult emotions without collapsing or numbing. Greater capacity enables greater action.',tasks:[
+    {zh:'今天允許一個困難情緒存在5分鐘，不逃避也不分析',en:'Today allow a difficult emotion to exist for 5 minutes — neither escaping nor analyzing it'},
+    {zh:'今天做一件讓你舒服的事，有意識地照顧自己',en:'Today do one thing that comforts you, consciously caring for yourself'},
+    {zh:'今天注意身體的感受，情緒住在身體裡',en:'Today notice bodily sensations — emotions live in the body'},
+  ]},
+  {icon:'⏳',zh:'延遲滿足力',en:'Delayed Gratification',desc:'選擇長期複利而不是短期即時獎勵的能力。這是長程視角的行為表現。',descen:'The ability to choose long-term compounding over immediate reward. This is the behavioral expression of long-term perspective.',tasks:[
+    {zh:'今天識別一個短期誘惑，然後主動選擇長期選項',en:'Today identify one short-term temptation, then actively choose the long-term option'},
+    {zh:'為一個未來目標做今天的小投資（讀10頁書、運動20分鐘）',en:'Make one small investment today for a future goal (read 10 pages, exercise 20 minutes)'},
+    {zh:'今天減少一個即時娛樂的使用時間，換成深度工作',en:'Today reduce one instant entertainment use and replace it with deep work'},
+  ]},
+  {icon:'🎯',zh:'專注力',en:'Deep Focus',desc:'在一段時間內完全進入一件事的能力。專注力是現代最稀缺的資源，也是最高槓桿的能力。',descen:'The ability to fully enter one thing for a sustained period. Focus is the scarcest resource in modern times — and the highest leverage ability.',tasks:[
+    {zh:'設定一個90分鐘無打擾的深度工作時段',en:'Set one 90-minute undisturbed deep work session'},
+    {zh:'今天使用「番茄鐘」：25分鐘專注，5分鐘休息，重複4次',en:'Today use the Pomodoro technique: 25 minutes focus, 5 minutes rest, repeat 4 times'},
+    {zh:'今天移除手機上最讓你分心的一個APP的通知',en:'Today remove notifications from the most distracting app on your phone'},
+  ]},
+  {icon:'🪨',zh:'韌性',en:'Resilience',desc:'在挫折和失敗之後快速恢復並繼續的能力。韌性不是不受傷，而是受傷後能繼續。',descen:'The ability to recover quickly after setbacks and continue. Resilience is not being unaffected — it is continuing after being affected.',tasks:[
+    {zh:'今天把一個失敗或挫折，重新描述為「數據」而不是「判決」',en:'Today redescribe one failure or setback as "data" rather than "verdict"'},
+    {zh:'今天問自己：這次的挫折教了我什麼？',en:'Today ask yourself: What did this setback teach me?'},
+    {zh:'今天做一件稍微超出你舒適圈但可以做到的事',en:'Today do one thing slightly outside your comfort zone but achievable'},
+  ]},
+  {icon:'⚖️',zh:'穩定性',en:'Stability',desc:'在外部環境變動時，仍能保持內在核心穩定的能力。穩定的人不是沒有波動，而是波動不控制他們。',descen:'The ability to maintain internal core stability when the external environment changes. Stable people don\'t lack fluctuation — fluctuations just don\'t control them.',tasks:[
+    {zh:'今天建立一個固定的晨間儀式（5-15分鐘），作為一天的錨點',en:'Today establish a fixed morning ritual (5-15 minutes) as the anchor of your day'},
+    {zh:'當感覺被外部事件拉走時，回到「我能控制什麼」這個問題',en:'When feeling pulled by external events, return to the question: "What can I control?"'},
+    {zh:'今天寫下3件讓你感到感恩的事，這能快速重置穩定性',en:'Today write down 3 things you\'re grateful for — this rapidly resets stability'},
+  ]},
+  {icon:'🔭',zh:'長程視角',en:'Long-Term Vision',desc:'把當下的決定放在3年、5年、10年的時間框架裡看待的能力。長程視角是一切低熵行為的基礎。',descen:'The ability to evaluate present decisions within 3-year, 5-year, 10-year timeframes. Long-term vision is the foundation of all low-entropy behavior.',tasks:[
+    {zh:'今天做一個決定時，先問：3年後的我會感謝今天的這個選擇嗎？',en:'Today before making a decision, ask: Will my 3-year-future self thank me for this choice?'},
+    {zh:'寫下你5年後想要的生活的具體畫面',en:'Write the specific image of the life you want 5 years from now'},
+    {zh:'找出一件短期痛苦但長期有益的事，今天開始做',en:'Find one thing that is short-term painful but long-term beneficial, and start today'},
+  ]},
+];
+
+const SB_PROBLEMS=[
+  {zh:'焦慮→失眠→效能下降',en:'Anxiety → Insomnia → Declining Performance',
+   steps:[
+     {col:'#fef9c3',zh:'焦慮觸發',en:'Anxiety trigger',body:'對某個未來結果過度預測威脅'},
+     {col:'#fef3c7',zh:'皮質醇升高',en:'Cortisol rises',body:'壓力荷爾蒙讓神經系統進入警覺狀態'},
+     {col:'#fde68a',zh:'睡眠受損',en:'Sleep impaired',body:'神經過度激活導致難以入睡或睡眠品質差'},
+     {col:'#fca5a5',zh:'認知功能下降',en:'Cognitive decline',body:'前額葉皮質（決策和專注）功能受損'},
+     {col:'#f87171',zh:'工作效能降低',en:'Work efficacy drops',body:'更多錯誤、更慢的執行、更多決策疲勞'},
+     {col:'#ef4444',zh:'更大焦慮',en:'Greater anxiety',body:'落後的工作成為新的焦慮來源，迴圈強化'},
+   ],
+   leverages:[
+     {zh:'睡眠品質（最高槓桿）',en:'Sleep quality (highest leverage)',body:'改善睡眠可以打破整個迴圈的最關鍵節點。'},
+     {zh:'焦慮的預測品質',en:'Prediction quality of anxiety',body:'把「最壞結果」換成「機率加權的預測」，降低啟動強度。'},
+   ]},
+  {zh:'拖延→自責→更拖延',en:'Procrastination → Self-Blame → More Procrastination',
+   steps:[
+     {col:'#ede9fe',zh:'完美主義標準',en:'Perfectionist standards',body:'任何開始都感覺達不到自設的標準'},
+     {col:'#ddd6fe',zh:'啟動阻力過大',en:'Startup resistance too high',body:'前額葉對「不夠好」的預警讓你迴避開始'},
+     {col:'#c4b5fd',zh:'延遲和迴避',en:'Delay and avoidance',body:'用其他事情填滿時間，假裝忙碌'},
+     {col:'#a78bfa',zh:'時間壓力增加',en:'Time pressure increases',body:'截止日臨近，焦慮升高'},
+     {col:'#f87171',zh:'趕工或放棄',en:'Rush job or give up',body:'品質差的輸出或完全放棄任務'},
+     {col:'#ef4444',zh:'自我批評',en:'Self-criticism',body:'「我就是這樣懶」→強化負面身份認同→下次更難開始'},
+   ],
+   leverages:[
+     {zh:'降低啟動標準（不完美開始）',en:'Lower startup standards (imperfect beginning)',body:'「只需做到60分的開始」讓啟動阻力歸零。'},
+     {zh:'修正自我對話（行為≠身份）',en:'Correct self-talk (behavior ≠ identity)',body:'拖延是行為，不是你是誰。分離行為和身份。'},
+   ]},
+  {zh:'關係衝突→迴避→疏離',en:'Relationship Conflict → Avoidance → Estrangement',
+   steps:[
+     {col:'#fce7f3',zh:'需求不一致',en:'Mismatched needs',body:'雙方在某個事件上有不同期待或需求'},
+     {col:'#fbcfe8',zh:'衝突或緊張',en:'Conflict or tension',body:'直接衝突，或透過冷漠/被動攻擊表現'},
+     {col:'#f9a8d4',zh:'迴避談話',en:'Avoiding discussion',body:'害怕讓情況更糟，選擇不討論'},
+     {col:'#f472b6',zh:'問題累積',en:'Problems accumulate',body:'未解決的議題在表面下堆積'},
+     {col:'#ec4899',zh:'情感距離增加',en:'Emotional distance grows',body:'雙方都感覺對方不理解自己'},
+     {col:'#be185d',zh:'關係疏離',en:'Relationship estrangement',body:'從親密走向功能性共存，或最終分離'},
+   ],
+   leverages:[
+     {zh:'早期誠實對話',en:'Early honest dialogue',body:'越早說出來，所需要的修復能量就越少。'},
+     {zh:'說出需求而不是批評',en:'State needs not criticisms',body:'「我需要⋯⋯」比「你總是⋯⋯」更有效。'},
+   ]},
+];
+
+const RES_ITEMS=[
+  {from:{zh:'失敗',en:'Failure',body:'「我又失敗了，我太爛了。」'},to:{zh:'模型誤差',en:'Model Error',body:'「這次的方法和現實之間有誤差，讓我找出是哪裡。」'},topic:'PERCEPTION UPGRADE · 感知升維'},
+  {from:{zh:'疾病症狀',en:'Disease Symptom',body:'「我身體有問題，可能很嚴重。」'},to:{zh:'失衡機制',en:'Imbalance Mechanism',body:'「身體哪個系統失衡了？輸入（睡眠/壓力/營養）的哪個環節出了問題？」'},topic:'HEALTH RESOLUTION · 健康解析'},
+  {from:{zh:'情緒爆發',en:'Emotional Explosion',body:'「我情緒失控了，我很糟糕。」'},to:{zh:'未滿足需求',en:'Unmet Need',body:'「這個情緒在告訴我什麼需求沒有被滿足？怎麼建設性地回應它？」'},topic:'EMOTION RESOLUTION · 情緒解析'},
+  {from:{zh:'孩子不聽話',en:'Child Misbehaving',body:'「這個孩子真的很難管，讓我很挫折。」'},to:{zh:'動機系統訊號',en:'Motivation System Signal',body:'「孩子的行為在告訴我他的什麼需求？他在用這個行為表達什麼？」'},topic:'PARENTING RESOLUTION · 教養解析'},
+  {from:{zh:'又沒有動力',en:'No Motivation Again',body:'「我就是懶，沒辦法。」'},to:{zh:'意義連結斷裂',en:'Meaning Connection Severed',body:'「我和正在做的事的意義連結在哪裡斷掉了？怎麼重新連接？」'},topic:'MOTIVATION RESOLUTION · 動力解析'},
+  {from:{zh:'又沒有錢',en:'Not Enough Money Again',body:'「我就是命不好，賺不到錢。」'},to:{zh:'價值創造模型問題',en:'Value Creation Model Issue',body:'「我目前創造的價值和我想得到的回報之間有什麼落差？怎麼提升價值創造？」'},topic:'FINANCE RESOLUTION · 財務解析'},
+];
+
+const WE_STEPS=[
+  {num:'STEP 1',zh:'觀察',en:'Observe',desc:'不評判地看見正在發生什麼，收集事實而不是詮釋。',descen:'See what is happening without judgment, collecting facts rather than interpretations.'},
+  {num:'STEP 2',zh:'建模',en:'Model',desc:'把觀察到的事實組織成結構，找出變量和因果關係。',descen:'Organize observed facts into structure, finding variables and cause-effect relationships.'},
+  {num:'STEP 3',zh:'預測',en:'Predict',desc:'基於模型，預測如果不改變會發生什麼，以及改變後會發生什麼。',descen:'Based on the model, predict what happens if nothing changes, and what happens with change.'},
+  {num:'STEP 4',zh:'行動',en:'Act',desc:'根據預測，選擇最高槓桿的行動，然後執行。',descen:'Based on predictions, choose the highest-leverage action and execute.'},
+  {num:'STEP 5',zh:'回饋',en:'Feedback',desc:'觀察行動的結果，和你的預測對比，找出誤差。',descen:'Observe the results of action, compare with your prediction, find the error.'},
+  {num:'STEP 6',zh:'修正',en:'Correct',desc:'分析誤差的來源，是模型錯誤、執行錯誤還是時機問題？',descen:'Analyze the source of error: was it model error, execution error, or timing?'},
+  {num:'STEP 7',zh:'更新',en:'Update',desc:'根據修正，更新你的模型，讓下一圈更精準。',descen:'Based on correction, update your model to make the next loop more precise.'},
+  {num:'STEP 8',zh:'智慧',en:'Wisdom',desc:'多圈之後，你的模型精準度持續提升，這就是智慧的湧現。',descen:'After many loops, model precision continuously improves — this is the emergence of wisdom.'},
+];
+
+const REFLECT_QS=[
+  {q:'今天什麼觀察讓你最驚訝？',en:'What observation surprised you most today?',why:'驚訝是你的模型遇到了不符合的現實。記錄它，就是建模的材料。',whyen:'Surprise is your model meeting reality that doesn\'t fit. Record it and it becomes modeling material.'},
+  {q:'今天你的哪個預測錯了？',en:'Which of your predictions was wrong today?',why:'錯誤的預測是模型升級的入口。不要逃避它，要分析它。',whyen:'Wrong predictions are entry points for model upgrade. Don\'t avoid them — analyze them.'},
+  {q:'今天什麼行動產生了最好的回饋？',en:'What action today produced the best feedback?',why:'找到高槓桿行動的方法是追蹤什麼行動產生最好的回饋。',whyen:'The way to find high-leverage actions is to track which actions produce the best feedback.'},
+  {q:'今天你更新了什麼模型或信念？',en:'What model or belief did you update today?',why:'每天至少更新一個模型，一年後你是完全不同的人。',whyen:'Update at least one model each day — in a year you are a completely different person.'},
+  {q:'明天你的最高槓桿行動是什麼？',en:'What is your highest-leverage action for tomorrow?',why:'提前決定最高槓桿行動，可以避免被緊急但不重要的事佔據時間。',whyen:'Deciding your highest-leverage action in advance prevents being consumed by urgent but unimportant matters.'},
+  {q:'今天你從混亂往秩序走了多少？',en:'How much did you move from chaos toward order today?',why:'每天往低熵前進一點點，長期複利，就是人生的質的飛躍。',whyen:'Moving a little toward lower entropy each day — long-term compounding — is a qualitative leap in life.'},
+];
+
+const RM_CHAINS=[
+  {topic:'EMOTION → ROOT · 情緒→根源',steps:[
+    {zh:'情緒出現',en:'Emotion appears',body:'感到焦慮、憤怒、悲傷、委屈⋯⋯'},
+    {zh:'找到缺口',en:'Find the gap',body:'這個情緒說明某個期待和現實之間有缺口'},
+    {zh:'辨識需求',en:'Identify need',body:'缺口背後有一個未被滿足的深層需求'},
+    {zh:'看見結構',en:'See structure',body:'這個需求是如何形成的？是什麼模式在重複？'},
+  ],solution:{zh:'解法：滿足真正的需求，而不是消滅情緒',en:'Solution: Meet the real need, not eliminate the emotion'}},
+  {topic:'CONFLICT → ROOT · 衝突→根源',steps:[
+    {zh:'表面衝突',en:'Surface conflict',body:'兩人對一件事有不同的意見或反應'},
+    {zh:'價值衝突',en:'Value conflict',body:'表面分歧背後是不同的核心價值觀'},
+    {zh:'需求衝突',en:'Need conflict',body:'不同的需求都在尋求被看見和滿足'},
+    {zh:'界線問題',en:'Boundary issue',body:'某人的界線沒有被清楚設定或表達'},
+  ],solution:{zh:'解法：找到共同需求，用清晰的界線建立空間',en:'Solution: Find shared needs, create space with clear boundaries'}},
+  {topic:'ILLNESS → ROOT · 疾病→根源',steps:[
+    {zh:'身體症狀',en:'Body symptoms',body:'疼痛、疲勞、免疫力下降⋯⋯'},
+    {zh:'生活模式',en:'Life patterns',body:'睡眠品質、飲食習慣、運動量、壓力水平'},
+    {zh:'情緒壓力',en:'Emotional stress',body:'長期未被處理的情緒和壓力如何影響身體'},
+    {zh:'代謝和免疫',en:'Metabolism & immunity',body:'慢性壓力如何影響皮質醇、發炎反應和免疫系統'},
+  ],solution:{zh:'解法：整合介入——生活方式＋情緒處理＋適當醫療',en:'Solution: Integrated intervention — lifestyle + emotional processing + appropriate medical care'}},
+  {topic:'PROCRASTINATION → ROOT · 拖延→根源',steps:[
+    {zh:'拖延行為',en:'Procrastination behavior',body:'知道要做卻不做，一直延遲'},
+    {zh:'完美主義或恐懼',en:'Perfectionism or fear',body:'害怕做不好，或害怕開始後發現自己不行'},
+    {zh:'自我保護機制',en:'Self-protection mechanism',body:'迴避是神經系統在保護你不受「失敗的感覺」傷害'},
+    {zh:'身份威脅',en:'Identity threat',body:'「如果我試了還是失敗，那我就真的不行了」'},
+  ],solution:{zh:'解法：不完美開始＋分離行為和身份（失敗的是方法，不是你）',en:'Solution: Imperfect beginning + separate behavior from identity (the method failed, not you)'}},
+  {topic:'RELATIONSHIP DRAIN → ROOT · 關係耗能→根源',steps:[
+    {zh:'關係感覺很累',en:'Relationship feels draining',body:'互動之後能量被抽乾，感覺不被理解'},
+    {zh:'自我隱藏',en:'Self-concealment',body:'在這段關係裡隱藏真實的自己，戴著面具互動'},
+    {zh:'恐懼驅動',en:'Fear-driven',body:'害怕真實的自己被拒絕，所以扮演對方想要的樣子'},
+    {zh:'需求不被滿足',en:'Needs unmet',body:'真實需求無法在關係裡被表達，積累不滿'},
+  ],solution:{zh:'解法：練習在安全的關係裡展現真實自己，建立真實連結',en:'Solution: Practice showing your real self in safe relationships, building authentic connection'}},
+  {topic:'FINANCIAL LACK → ROOT · 財務匱乏→根源',steps:[
+    {zh:'錢不夠用',en:'Never enough money',body:'收入和支出之間的持續差距'},
+    {zh:'金錢信念',en:'Money beliefs',body:'對金錢的限制信念（錢是骯髒的、窮人才高尚）'},
+    {zh:'價值創造缺口',en:'Value creation gap',body:'創造的價值和所得報酬之間的差距'},
+    {zh:'消費模式',en:'Spending patterns',body:'支出模式是否和長期目標一致？'},
+  ],solution:{zh:'解法：更新金錢信念＋提升價值創造能力＋設計消費結構',en:'Solution: Update money beliefs + elevate value creation + design spending structure'}},
+];
+
+const DASH_METRICS=[
+  {icon:'👤',zh:'主體感',en:'Agency',desc:'感覺自己是生命的設計者，而不是被動的受害者。',descen:'Feeling like the designer of your life, not a passive victim.',tip:'每天做一個「主動的選擇」，無論多小，就能提升主體感。',tipen:'Making one "active choice" each day — however small — raises sense of agency.'},
+  {icon:'⚖️',zh:'穩定性',en:'Stability',desc:'在外部混亂時，內部核心仍然穩定的程度。',descen:'The degree to which your internal core remains stable amid external chaos.',tip:'建立晨間儀式和固定睡眠時間，是提升穩定性最快的方法。',tipen:'Building a morning ritual and fixed sleep time is the fastest way to increase stability.'},
+  {icon:'🔭',zh:'長程視角',en:'Long-Term Vision',desc:'把當下事件放在長時間框架裡看的能力。',descen:'The ability to see present events within a long timeframe.',tip:'每週問一次：「3年後的我會怎麼看今天的這個決定？」',tipen:'Ask weekly: "How will my 3-year-future self see the decision I\'m making today?"'},
+  {icon:'💛',zh:'情緒承載力',en:'Emotional Capacity',desc:'承載困難情緒而不崩潰或麻木的寬度。',descen:'The breadth of your ability to carry difficult emotions without collapsing or numbing.',tip:'每天讓一個困難情緒存在（而不是壓制它），這能擴大你的承載窗口。',tipen:'Each day let one difficult emotion exist (rather than suppressing it) — this expands your tolerance window.'},
+  {icon:'💡',zh:'精神密度',en:'Mental Density',desc:'每天有多少時間是高品質的主動思考，而不是被動消費。',descen:'How much of each day involves high-quality active thinking versus passive consumption.',tip:'每天設定一段「無輸入時間」（散步、靜坐），讓大腦整合資訊。',tipen:'Set aside "no-input time" daily (walking, sitting quietly) to let the brain integrate information.'},
+  {icon:'🕊️',zh:'人格自由度',en:'Character Freedom',desc:'不被恐懼、比較、他人期待控制的程度。',descen:'The degree to which you are free from control by fear, comparison, and others\' expectations.',tip:'每次你選擇「真實而不是討好」，你的人格自由度就升一分。',tipen:'Every time you choose "authentic over pleasing," your character freedom rises one point.'},
+];
+
+const OS_STACKS=[
+  {icon:'👤',title:'身份堆疊',titleen:'Identity Stack',subtitle:'我是誰 · Who Am I',items:[
+    {zh:'核心身份',en:'Core Identity',desc:'你相信自己是一個什麼樣的人？這個信念是一切的起點。',fill:75},
+    {zh:'價值觀羅盤',en:'Values Compass',desc:'你最重要的5個核心價值觀是什麼？你的決定和它們一致嗎？',fill:60},
+    {zh:'使命陳述',en:'Mission Statement',desc:'你存在的目的是什麼？一句話說清楚你的使命。',fill:45},
+    {zh:'成長心態',en:'Growth Mindset',desc:'你相信你的能力是可以培養的，而不是固定的嗎？',fill:80},
+  ]},
+  {icon:'⚡',title:'資源堆疊',titleen:'Resource Stack',subtitle:'我有什麼 · What I Have',items:[
+    {zh:'時間設計',en:'Time Design',desc:'你的時間是你分配的，還是被緊急事務分配的？',fill:55},
+    {zh:'注意力品質',en:'Attention Quality',desc:'你的注意力是聚焦在高槓桿事項上，還是破碎在低價值刺激裡？',fill:40},
+    {zh:'金錢流',en:'Money Flow',desc:'你的金錢流向是否和你的長期目標一致？',fill:65},
+    {zh:'能力複利',en:'Skill Compounding',desc:'你在哪個領域正在複利式地累積能力？',fill:70},
+  ]},
+  {icon:'💚',title:'健康堆疊',titleen:'Health Stack',subtitle:'我的身體 · My Body',items:[
+    {zh:'睡眠品質',en:'Sleep Quality',desc:'睡眠是所有系統的基礎。品質差的睡眠讓所有其他投入的回報減半。',fill:60},
+    {zh:'運動一致性',en:'Exercise Consistency',desc:'規律運動是最划算的認知和情緒投資。每週至少150分鐘中強度。',fill:50},
+    {zh:'營養密度',en:'Nutritional Density',desc:'你吃進去的是燃料還是負擔？關注食物的營養密度而不只是卡路里。',fill:65},
+    {zh:'情緒健康',en:'Emotional Wellbeing',desc:'壓力管理、人際品質和內在對話的品質決定了你的情緒基準線。',fill:55},
+  ]},
+];
+
+const AI_LAYERS_DATA=[
+  {num:'LAYER 01',zh:'本體層',en:'Ontological Layer',q:'你的核心需求是什麼？',qen:'What is your core need right now?',hint:'問：這件事背後，我真正在尋求的是什麼？安全感？認可？控制感？意義？',hintEn:'Ask: Behind this situation, what am I truly seeking? Safety? Recognition? Control? Meaning?'},
+  {num:'LAYER 02',zh:'結構層',en:'Structural Layer',q:'哪些變量造成了這個狀況？',qen:'What variables are causing this situation?',hint:'問：這個問題有哪些組成部分？它們之間的關係是什麼？',hintEn:'Ask: What are the components of this problem? What are the relationships between them?'},
+  {num:'LAYER 03',zh:'機制層',en:'Mechanism Layer',q:'哪些回饋迴路正在運作？',qen:'Which feedback loops are operating?',hint:'問：什麼在強化這個狀況？有沒有我沒注意到的迴圈在運轉？',hintEn:'Ask: What is reinforcing this situation? Is there a loop operating that I haven\'t noticed?'},
+  {num:'LAYER 04',zh:'行動層',en:'Action Layer',q:'今天最小可行的更新是什麼？',qen:'What is the smallest viable update today?',hint:'問：如果只能改變一件事，而且從今天開始，那是什麼？',hintEn:'Ask: If I could only change one thing, starting today, what would it be?'},
+];
+
+// ─── RENDER ──────────────────────────────────────
+
+// Entropy
+document.getElementById('ecHighRows').innerHTML=EC_HIGH.map(([z,e])=>`<div class="ec-row">❌ <div>${z}<div class="ren">${e}</div></div></div>`).join('');
+document.getElementById('ecLowRows').innerHTML=EC_LOW.map(([z,e])=>`<div class="ec-row">✅ <div>${z}<div class="ren">${e}</div></div></div>`).join('');
+
+// Problems
+const probTabs=document.getElementById('probTabs');
+const probResult=document.getElementById('probResult');
+PROBLEMS.forEach((p,i)=>{
+  const b=document.createElement('button');
+  b.className='pt';
+  b.innerHTML=`${p.zh}<span class="pe">${p.en}</span>`;
+  b.onclick=()=>{
+    document.querySelectorAll('.pt').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    probResult.className='prob-result show';
+    probResult.innerHTML=Object.entries(p.layers).map(([k,v])=>`<div class="pr-card">
+      <div class="pr-label">${v.zh}</div>
+      <div class="pr-en">${v.en}</div>
+      <div class="pr-body">${v.body}</div>
+      <div class="pr-body-en">${v.en2||''}</div>
+    </div>`).join('');
+    // fix: use body field
+    probResult.className='prob-result show';
+    probResult.innerHTML=`
+      <div class="pr-card"><div class="pr-label">${p.layers.surface.zh}</div><div class="pr-body">${p.layers.surface.body}</div></div>
+      <div class="pr-card"><div class="pr-label">${p.layers.structure.zh}</div><div class="pr-body">${p.layers.structure.body}<div class="pr-body-en">${p.layers.structure.en}</div></div></div>
+      <div class="pr-card"><div class="pr-label">${p.layers.mechanism.zh}</div><div class="pr-body">${p.layers.mechanism.body}<div class="pr-body-en">${p.layers.mechanism.en}</div></div></div>
+      <div class="pr-card" style="background:var(--teal-l);border-color:var(--teal)"><div class="pr-label" style="color:var(--teal)">${p.layers.action.zh}</div><div class="pr-body" style="font-weight:700;color:var(--teal)">${p.layers.action.body}</div><div class="pr-body-en">${p.layers.action.en}</div></div>`;
+    probResult.scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  probTabs.appendChild(b);
+});
+
+// Update Engine
+const ueGrid=document.getElementById('ueGrid');
+const ueResult=document.getElementById('ueResult');
+UE_DOMAINS.forEach((d,i)=>{
+  const b=document.createElement('div');
+  b.className='ue-btn';
+  b.innerHTML=`<div class="uz">${d.zh}</div><div class="ue">${d.en}</div>`;
+  b.onclick=()=>{
+    document.querySelectorAll('.ue-btn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    ueResult.className='ue-result show';
+    ueResult.innerHTML=`
+      <div class="uer-card">
+        <div class="uer-label" style="color:var(--rose)">❌ 舊模型（過期版本）· OLD MODEL</div>
+        <div class="uer-zh">"${d.old}"</div>
+        <div class="uer-en">"${d.olden}"</div>
+        <div class="uer-body" style="color:var(--rose)">${d.issue}</div>
+        <div class="uer-body-en">${d.issueen}</div>
+      </div>
+      <div class="uer-card" style="background:var(--emerald-l);border-color:#6ee7b7">
+        <div class="uer-label" style="color:var(--emerald)">✅ 新模型（更新版本）· NEW MODEL</div>
+        <div class="uer-zh" style="color:var(--emerald)">"${d.newModel}"</div>
+        <div class="uer-en" style="color:var(--teal)">"${d.newModelen}"</div>
+      </div>
+      <div class="uer-card" style="background:var(--teal-l);border-color:var(--teal-m)">
+        <div class="uer-label" style="color:var(--teal)">🎯 今日行動 · TODAY'S ACTION</div>
+        <div class="uer-body" style="font-weight:700;color:var(--teal)">${d.action}</div>
+        <div class="uer-body-en">${d.actionen}</div>
+      </div>`;
+    ueResult.scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  ueGrid.appendChild(b);
+});
+
+// Personality
+const persGrid=document.getElementById('persGrid');
+const persResult=document.getElementById('persResult');
+PERSONALITIES.forEach(p=>{
+  const b=document.createElement('div');
+  b.className='pers-btn';
+  b.innerHTML=`<span class="picon">${p.icon}</span><div class="pzh">${p.zh}</div><div class="pen">${p.en}</div>`;
+  b.onclick=()=>{
+    document.querySelectorAll('.pers-btn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    persResult.className='pers-result show';
+    persResult.innerHTML=`
+      <h3 style="font-size:18px;font-weight:900;color:var(--violet);margin-bottom:4px">${p.icon} ${p.zh} · ${p.en}</h3>
+      <p style="font-size:14px;color:var(--ink2);margin-bottom:6px">${p.desc}</p>
+      <p style="font-size:12px;color:var(--ink3);font-style:italic;margin-bottom:16px">${p.descen}</p>
+      <div style="padding:16px;background:var(--violet-l);border-radius:10px;margin-bottom:14px;border-left:4px solid var(--violet)">
+        <div style="font-size:11px;font-weight:900;letter-spacing:.07em;color:var(--violet);margin-bottom:6px">升維路徑 · EVOLUTION PATH</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink)">${p.path}</div>
+        <div style="font-size:12px;color:var(--ink3);font-style:italic;margin-top:5px">${p.pathen}</div>
+      </div>
+      <div style="display:grid;gap:8px">${p.tasks.map((t,i)=>`<div style="display:flex;align-items:start;gap:10px;padding:10px;background:var(--bg2);border-radius:8px;font-size:13px;color:var(--ink2)"><input type="checkbox" id="pt${i}" style="accent-color:var(--violet);margin-top:2px"><label for="pt${i}">${t}</label></div>`).join('')}</div>`;
+    persResult.scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  persGrid.appendChild(b);
+});
+
+// Upgrade Tasks
+const upgGrid=document.getElementById('upgGrid');
+UPG_ABILITIES.forEach((u,i)=>{
+  upgGrid.innerHTML+=`<div class="upg-card">
+    <div class="upg-icon">${u.icon}</div>
+    <div class="upg-zh">${u.zh}</div>
+    <div class="upg-en">${u.en}</div>
+    <div class="upg-desc">${u.desc}</div>
+    <div class="upg-desc-en">${u.descen}</div>
+    <div class="upg-tasks">${u.tasks.map((t,j)=>`<div class="upg-task"><input type="checkbox" id="ut${i}${j}"><div><div class="tzh"><label for="ut${i}${j}">${t.zh}</label></div><div class="ten">${t.en}</div></div></div>`).join('')}</div>
+  </div>`;
+});
+
+// System Builder
+const sbBtns=document.getElementById('sbBtns');
+const sbOutput=document.getElementById('sbOutput');
+SB_PROBLEMS.forEach((p,i)=>{
+  const b=document.createElement('button');
+  b.className='sb-sel-btn';
+  b.innerHTML=`${p.zh}<span class="sbe">${p.en}</span>`;
+  b.onclick=()=>{
+    document.querySelectorAll('.sb-sel-btn').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    const colors=['#fef9c3','#fef3c7','#fde68a','#fca5a5','#f87171','#ef4444'];
+    sbOutput.className='sb-output show';
+    sbOutput.innerHTML=`
+      <div style="font-size:13px;font-weight:800;color:var(--emerald);margin-bottom:12px">系統迴圈圖 · System Loop Diagram</div>
+      <div class="loop-chain">
+        ${p.steps.map((s,si)=>`
+          <div class="lc-step" style="background:${s.col}">
+            <div class="lc-zh">⬡ ${s.zh}</div>
+            <div class="lc-en">${s.en}</div>
+            <div style="font-size:12px;color:var(--ink2);margin-top:4px">${s.body}</div>
+          </div>
+          ${si<p.steps.length-1?'<div class="lc-arrow">↓ 導致 causes</div>':'<div class="lc-arrow">↩ 強化迴圈 reinforcing loop</div>'}
+        `).join('')}
+      </div>
+      <div class="lc-note">🎯 高槓桿介入點 · High-Leverage Intervention Points</div>
+      <div class="sb-fix-grid">${p.leverages.map(l=>`<div class="sb-fix"><div class="sbf-title">LEVERAGE POINT</div><div class="sbf-zh">${l.zh}</div><div class="sbf-en">${l.en}</div><div style="font-size:12px;color:var(--ink2);margin-top:6px">${l.body}</div></div>`).join('')}</div>`;
+    sbOutput.scrollIntoView({behavior:'smooth',block:'nearest'});
+  };
+  sbBtns.appendChild(b);
+});
+
+// Resolution Full
+const resFullGrid=document.getElementById('resFullGrid');
+RES_ITEMS.forEach(r=>{
+  resFullGrid.innerHTML+=`<div class="rfl-card">
+    <div class="rfl-topic">${r.topic}</div>
+    <div class="rfl-item">
+      <div class="rfl-from">
+        <div style="font-size:10px;font-weight:900;color:var(--rose);margin-bottom:4px">🔴 低解析度 Low Resolution</div>
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">${r.from.zh}</div>
+        <div style="font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:5px">${r.from.en}</div>
+        <div style="font-size:12px;color:var(--ink2)">${r.from.body}</div>
+      </div>
+      <div class="rfl-arrow">→</div>
+      <div class="rfl-to">
+        <div style="font-size:10px;font-weight:900;color:var(--emerald);margin-bottom:4px">🟢 高解析度 High Resolution</div>
+        <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px">${r.to.zh}</div>
+        <div style="font-size:11px;color:var(--ink3);font-style:italic;margin-bottom:5px">${r.to.en}</div>
+        <div style="font-size:12px;color:var(--ink2)">${r.to.body}</div>
+      </div>
+    </div>
+  </div>`;
+});
+
+// Wisdom Loop
+const weLoop=document.getElementById('weLoop');
+WE_STEPS.forEach(s=>{
+  weLoop.innerHTML+=`<div class="we-step">
+    <div class="we-num">${s.num}</div>
+    <div class="we-zh">${s.zh}</div>
+    <div class="we-en">${s.en}</div>
+    <div class="we-desc">${s.desc}</div>
+    <div class="we-desc-en">${s.descen}</div>
+  </div>`;
+});
+
+// Reflect
+const reflectGrid=document.getElementById('reflectGrid');
+REFLECT_QS.forEach((r,i)=>{
+  reflectGrid.innerHTML+=`<div class="rf-card">
+    <div class="rf-q">${r.q}</div>
+    <div class="rf-en">${r.en}</div>
+    <textarea class="rf-area" placeholder="今天的答案⋯⋯ · Your answer today..."></textarea>
+    <div class="rf-why">${r.why}</div>
+    <div class="rf-why-en">${r.whyen}</div>
+  </div>`;
+});
+
+// Resolution Matrix
+const rmGrid=document.getElementById('rmGrid');
+RM_CHAINS.forEach(c=>{
+  rmGrid.innerHTML+=`<div class="rm-card">
+    <div class="rm-topic">${c.topic}</div>
+    <div class="rm-chain">
+      ${c.steps.map((s,i)=>`
+        <div class="rmc-step">
+          <div class="rmc-num">LEVEL ${i+1}</div>
+          <div class="rmc-zh">${s.zh}</div>
+          <div class="rmc-en">${s.en}</div>
+          <div class="rmc-body">${s.body}</div>
+        </div>
+        ${i<c.steps.length-1?'<div class="rmc-arr">↓</div>':''}
+      `).join('')}
+      <div class="rmc-arr">↓</div>
+      <div class="rmc-solution">
+        <div class="rmc-sol-label">✅ 解法 SOLUTION</div>
+        <div class="rmc-sol-zh">${c.solution.zh}</div>
+        <div class="rmc-sol-en">${c.solution.en}</div>
+      </div>
+    </div>
+  </div>`;
+});
+
+// Dashboard
+const dashGrid=document.getElementById('dashGrid');
+DASH_METRICS.forEach((m,i)=>{
+  const id='d'+i;
+  dashGrid.innerHTML+=`<div class="dash-card">
+    <div class="dash-icon">${m.icon}</div>
+    <div class="dash-zh">${m.zh}</div>
+    <div class="dash-en">${m.en}</div>
+    <div class="dash-desc">${m.desc}</div>
+    <div class="dash-desc-en">${m.descen}</div>
+    <div class="dash-input">
+      <label>今日評分 Today:</label>
+      <input type="range" class="dash-range" min="1" max="10" value="5" id="${id}" oninput="document.getElementById('${id}n').textContent=this.value;document.getElementById('${id}f').style.width=(this.value*10)+'%'">
+      <span class="dash-num" id="${id}n">5</span>
+    </div>
+    <div class="dash-bar"><div class="dash-fill" id="${id}f" style="width:50%"></div></div>
+    <div class="dash-tip">${m.tip}</div>
+    <div class="dash-tip" style="font-style:italic;color:var(--ink3);margin-top:3px;font-size:10px">${m.tipen}</div>
+  </div>`;
+});
+
+// Life OS Stacks
+const osStacks=document.getElementById('osStacks');
+OS_STACKS.forEach(s=>{
+  osStacks.innerHTML+=`<div class="os-stack">
+    <div class="os-stack-head">
+      <div class="os-stack-icon">${s.icon}</div>
+      <div><div class="os-stack-title">${s.title}</div><div class="os-stack-en">${s.titleen} · ${s.subtitle}</div></div>
+    </div>
+    ${s.items.map((it,i)=>`<div class="os-item">
+      <div class="os-item-head"><span class="os-item-zh">${it.zh}</span><span class="os-item-en">${it.en}</span></div>
+      <div class="os-bar"><div class="os-fill" style="width:${it.fill}%"></div></div>
+      <div class="os-desc">${it.desc}</div>
+    </div>`).join('')}
+  </div>`;
+});
+
+// AI Layers
+const aiLayersEl=document.getElementById('aiLayers');
+AI_LAYERS_DATA.forEach((l,i)=>{
+  aiLayersEl.innerHTML+=`<div class="ai-layer" id="al${i}">
+    <div class="ail-num">${l.num}</div>
+    <div class="ail-zh">${l.zh}</div>
+    <div class="ail-en">${l.en}</div>
+    <div class="ail-q">${l.q}</div>
+    <div class="ail-q-en">${l.qen}</div>
+    <div class="ail-answer" id="ala${i}"></div>
+  </div>`;
+});
+
+function analyzeAI(){
+  const input=document.getElementById('aiInput').value.trim();
+  if(!input){alert('請先輸入你的困擾 · Please enter what troubles you');return;}
+  const responses=[
+    `你說：「${input}」\n\n在本體層，這個情況背後有一個核心需求沒有被滿足。可能是：安全感（確定性）、認可（被看見）、控制感（掌握局面）或意義感（這件事有價值）。\n\n你的核心需求是哪一個？找到它，才能真正回應它，而不是只處理表面症狀。\n\nYou said: "${input}" At the ontological layer, there is a core need that has not been met behind this situation. It may be: safety (certainty), recognition (being seen), control (mastery) or meaning (this matters). Which core need is yours? Finding it enables genuine response rather than only treating surface symptoms.`,
+    `在結構層：「${input}」這個問題，可能涉及多個變量：\n1. 外部環境因素（環境、人、資源）\n2. 內部狀態因素（睡眠、情緒、信念）\n3. 模式因素（過去的習慣在驅動現在的行為）\n\n找出這三個維度各有什麼在影響你，才能看清楚結構。\n\nAt the structural layer: this problem may involve external factors (environment, people, resources), internal state factors (sleep, emotions, beliefs), and pattern factors (past habits driving present behavior). Finding what operates in each dimension reveals the structure.`,
+    `在機制層，你描述的「${input}」，很可能有一個強化迴圈在運作。\n\n常見的機制是：A造成B，B又強化了A，形成一個越來越緊的迴圈。找到這個迴圈，就能找到「介入哪裡可以打破它」。\n\n今天問自己：「是什麼讓這個狀況一直維持？」然後找到那個能打破迴圈的高槓桿節點。\n\nAt the mechanism layer, there is likely a reinforcing loop operating. A causes B, B reinforces A — an ever-tightening loop. Finding this loop reveals where to intervene to break it. Ask today: "What keeps this situation going?" Then find the high-leverage node that can break the loop.`,
+    `在行動層，面對「${input}」，今天你能做的最小可行行動是什麼？\n\n不是完美的解決方案，而是最小的、今天就能做的、有方向的一步。\n\n原則：從現在能控制的事開始。改變輸入，才能改變輸出。從今天開始，一個小步驟，然後明天再一個。\n\nAt the action layer, facing this situation, what is the smallest viable action you can take today? Not a perfect solution — the smallest, doable-today, directional step. Principle: start with what you can control now. Change inputs to change outputs. One small step today, another tomorrow.`,
+  ];
+  AI_LAYERS_DATA.forEach((l,i)=>{
+    const el=document.getElementById('ala'+i);
+    el.className='ail-answer show';
+    el.innerHTML=`<div style="white-space:pre-line">${responses[i]}</div><div class="ail-answer-en">${l.hint}<br><em>${l.hintEn}</em></div>`;
+    document.getElementById('al'+i).classList.add('active');
+  });
+}
+</script>
+</body>
+</html>
